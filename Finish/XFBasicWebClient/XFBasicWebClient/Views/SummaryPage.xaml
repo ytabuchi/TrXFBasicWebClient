@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="XFBasicWebClient.Views.SummaryPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Summary Page">
+    <AbsoluteLayout>
+        <ListView x:Name="peopleList"
+                  AbsoluteLayout.LayoutFlags="All"
+                  AbsoluteLayout.LayoutBounds="0,0,1,1"
+                  HasUnevenRows="true"
+                  IsPullToRefreshEnabled="True"
+                  ItemsSource="{Binding}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Style="{DynamicResource LabelStyleId}" Text="{Binding Id}" />
+                            <StackLayout Padding="5">
+                                <Label Text="{Binding Name}" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding Birthday, StringFormat='{0:yyyy/MM/dd HH:mm}'}"
+                                       TextColor="Gray"
+                                       VerticalTextAlignment="End" />
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button x:Name="addButton"
+                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                AbsoluteLayout.LayoutBounds="0,1,0.5,AutoSize"
+                Margin="8"
+                Style="{DynamicResource ButtonStyleTransparent}"
+                Text="Add" />
+        <Button x:Name="clearButton"
+                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                AbsoluteLayout.LayoutBounds="1,1,0.5,AutoSize"
+                Margin="8"
+                Style="{DynamicResource ButtonStyleTransparent}"
+                Text="Clear all data" />
+
+    </AbsoluteLayout>
+</ContentPage>

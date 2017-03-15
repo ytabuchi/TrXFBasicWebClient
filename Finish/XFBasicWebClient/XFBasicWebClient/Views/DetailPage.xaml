@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="XFBasicWebClient.Views.DetailPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Detail Page"
+             Padding="12">
+    <StackLayout VerticalOptions="FillAndExpand">
+        <Grid RowSpacing="8" VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Id"
+                   VerticalTextAlignment="Center" />
+            <Label x:Name="IdData"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Text="{Binding Id}" />
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Name"
+                   VerticalTextAlignment="Center" />
+            <Entry x:Name="NameData"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   Text="{Binding Name}" />
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   Text="Birthday"
+                   VerticalTextAlignment="Center" />
+            <DatePicker x:Name="BirthdayData"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Date="{Binding Birthday}"
+                        Format="yyyy/MM/dd" />
+        </Grid>
+
+        <StackLayout Padding="4"
+                     Orientation="Horizontal"
+                     Spacing="8">
+            <Button x:Name="saveButton"
+                    HorizontalOptions="FillAndExpand"
+                    Style="{DynamicResource ButtonStyleGreen}"
+                    Text="Save" />
+            <Button x:Name="deleteButton"
+                    HorizontalOptions="FillAndExpand"
+                    Style="{DynamicResource ButtonStyleRed}"
+                    Text="Delete" />
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>

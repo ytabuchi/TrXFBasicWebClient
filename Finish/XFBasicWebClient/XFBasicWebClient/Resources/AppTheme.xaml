@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary x:Class="XFBasicWebClient.Resources.AppTheme"
+                    xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Color x:Key="FontColorLightgray">#cccccc</Color>
+    <Color x:Key="FontColor2">#00ff00</Color>
+    <Color x:Key="ButtonColorGreen">#22bb22</Color>
+    <Color x:Key="ButtonColorRed">#bb2222</Color>
+    <x:Double x:Key="FontSize12">12</x:Double>
+    <x:Double x:Key="FontSize18">18</x:Double>
+    <Thickness x:Key="Margin15">15,0,5,0</Thickness>
+    <Style x:Key="LabelStyleId" TargetType="Label">
+        <Setter Property="FontSize" Value="{DynamicResource FontSize12}" />
+        <Setter Property="TextColor" Value="{DynamicResource FontColorLightgray}" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="{DynamicResource Margin15}" />
+    </Style>
+    <Style x:Key="ButtonStyleGreen" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{DynamicResource ButtonColorGreen}" />
+        <Setter Property="TextColor" Value="White" />
+    </Style>
+    <Style x:Key="ButtonStyleRed" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{DynamicResource ButtonColorRed}" />
+        <Setter Property="TextColor" Value="White" />
+    </Style>
+    <Style x:Key="ButtonStyleTransparent" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#aaaaaa" />
+        <Setter Property="Opacity" Value="0.7" />
+    </Style>
+
+</ResourceDictionary>
