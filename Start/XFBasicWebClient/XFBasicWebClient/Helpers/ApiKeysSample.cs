@@ -8,6 +8,6 @@ namespace XFBasicWebClient.Helpers
 {
     //class ApiKeys
     //{
-    //    public static readonly Uri baseAddress = new Uri("https://xxxxx/");
+    //    public static readonly Uri BaseAddress = new Uri("https://xxxxx/");
     //}
 }
