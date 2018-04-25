@@ -40,7 +40,7 @@ private WebApiClient()
 ```
 
 ```csharp
-private Uri baseAddress = Helpers.ApiKeys.baseAddress;
+private Uri baseAddress = Helpers.ApiKeys.BaseAddress;
 private string Token = "";
 private object locker = new object();
 
@@ -460,9 +460,9 @@ addButton.Clicked += async (sender, e) =>
     };
     await WebApiClient.Instance.PostPersonAsync(p);
 
-    var webPeople = await WebApiClient.Instance.GetPeopleAsync();
+    var people = await WebApiClient.Instance.GetPeopleAsync();
     _people.Clear();
-    foreach (var person in webPeople)
+    foreach (var person in people)
     {
         _people.Add(person);
     }
@@ -485,9 +485,9 @@ clearButton.Clicked += async (sender, e) =>
 ```csharp
 peopleList.Refreshing += async (sender, e) =>
 {
-    var webPeople = await WebApiClient.Instance.GetPeopleAsync();
+    var people = await WebApiClient.Instance.GetPeopleAsync();
     _people.Clear();
-    foreach (var person in webPeople)
+    foreach (var person in people)
     {
         _people.Add(person);
     }
@@ -501,9 +501,9 @@ protected override async void OnAppearing()
 {
     base.OnAppearing();
 
-    var webPeople = await WebApiClient.Instance.GetPeopleAsync();
+    var people = await WebApiClient.Instance.GetPeopleAsync();
     _people.Clear();
-    foreach (var person in webPeople)
+    foreach (var person in people)
     {
         _people.Add(person);
     }
@@ -534,9 +534,9 @@ namespace XFBasicWebClient.Views
                 };
                 await WebApiClient.Instance.PostPersonAsync(p);
 
-                var webPeople = await WebApiClient.Instance.GetPeopleAsync();
+                var people = await WebApiClient.Instance.GetPeopleAsync();
                 _people.Clear();
-                foreach (var person in webPeople)
+                foreach (var person in people)
                 {
                     _people.Add(person);
                 }
@@ -556,10 +556,10 @@ namespace XFBasicWebClient.Views
 
             peopleList.Refreshing += async (sender, e) =>
             {
-                var webPeople = await WebApiClient.Instance.GetPeopleAsync();
+                var people = await WebApiClient.Instance.GetPeopleAsync();
 
                 _people.Clear();
-                foreach (var person in webPeople)
+                foreach (var person in people)
                 {
                     _people.Add(person);
                 }
@@ -572,10 +572,10 @@ namespace XFBasicWebClient.Views
         {
             base.OnAppearing();
 
-            var webPeople = await WebApiClient.Instance.GetPeopleAsync();
+            var people = await WebApiClient.Instance.GetPeopleAsync();
 
             _people.Clear();
-            foreach (var person in webPeople)
+            foreach (var person in people)
             {
                 _people.Add(person);
             }
