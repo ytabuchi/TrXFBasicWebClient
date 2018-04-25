@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="f22707c9-a599-443c-9664-ade88bd505b1"
+    Name="09543004-ad6c-4054-8b0c-159ee155bfe2"
     Publisher="CN=ytabuchi"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="f22707c9-a599-443c-9664-ade88bd505b1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="09543004-ad6c-4054-8b0c-159ee155bfe2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>XFBasicWebClient.UWP</DisplayName>
