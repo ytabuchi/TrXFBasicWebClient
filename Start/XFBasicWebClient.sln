@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFBasicWebClient", "XFBasicWebClient\XFBasicWebClient\XFBasicWebClient.csproj", "{ADABDA39-1401-41EC-BF6A-FBB0DCEDA551}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFBasicWebClient", "XFBasicWebClient\XFBasicWebClient\XFBasicWebClient.csproj", "{ADABDA39-1401-41EC-BF6A-FBB0DCEDA551}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFBasicWebClient.Droid", "XFBasicWebClient\XFBasicWebClient.Droid\XFBasicWebClient.Droid.csproj", "{8659AF25-C6A9-4EDE-84C6-725D87760F7B}"
 EndProject
@@ -136,11 +136,7 @@ Global
 		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
 		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|x64.Build.0 = Debug|Any CPU
-		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|x64.Deploy.0 = Debug|Any CPU
 		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|x86.Build.0 = Debug|Any CPU
-		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Debug|x86.Deploy.0 = Debug|Any CPU
 		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8659AF25-C6A9-4EDE-84C6-725D87760F7B}.Release|Any CPU.Deploy.0 = Release|Any CPU
@@ -254,5 +250,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E8F689A-FDA2-4746-AC2C-AFAD70C84384}
 	EndGlobalSection
 EndGlobal
