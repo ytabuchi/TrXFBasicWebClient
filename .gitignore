@@ -1,6 +1,7 @@
 # Created by https://www.gitignore.io/api/macos,xcode,swift,windows,android,jetbrains,visualstudio,xamarinstudio,androidstudio,visualstudiocode
 
 ### Original ###
+*.bak
 ApiKey.cs
 ApiKeys.cs
 Secret.cs
