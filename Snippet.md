@@ -383,7 +383,7 @@ namespace XFBasicWebClient.Models
     <Label Style="{DynamicResource LabelStyleId}" Text="{Binding Id}" />
     <StackLayout Padding="5">
         <Label Text="{Binding Name}" VerticalTextAlignment="Center" />
-        <Label Text="{Binding Birthday, StringFormat='{0:yyyy/MM/dd HH:mm}'}"
+        <Label Text="{Binding Birthday, StringFormat='{}{0:yyyy/MM/dd HH:mm}'}"
                 TextColor="Gray"
                 VerticalTextAlignment="End" />
     </StackLayout>
@@ -412,7 +412,7 @@ namespace XFBasicWebClient.Models
                           <Label Style="{DynamicResource LabelStyleId}" Text="{Binding Id}" />
                           <StackLayout Padding="5">
                               <Label Text="{Binding Name}" VerticalTextAlignment="Center" />
-                              <Label Text="{Binding Birthday, StringFormat='{0:yyyy/MM/dd HH:mm}'}"
+                              <Label Text="{Binding Birthday, StringFormat='{}{0:yyyy/MM/dd HH:mm}'}"
                                       TextColor="Gray"
                                       VerticalTextAlignment="End" />
                           </StackLayout>
