@@ -31,9 +31,9 @@ namespace XFBasicWebClient.Models
             {
                 if (string.IsNullOrEmpty(Token))
                 {
-                    try
+                    using (var client = new HttpClient())
                     {
-                        using (var client = new HttpClient())
+                        try
                         {
                             client.BaseAddress = baseAddress;
 
@@ -45,10 +45,10 @@ namespace XFBasicWebClient.Models
 
                             Token = JsonConvert.DeserializeObject<AuthResult>(authResult).AccessToken;
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"【InitializeError】{ex.Source},{ex.Message},{ex.InnerException}");
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"【InitializeError】{ex.Source},{ex.Message},{ex.InnerException}");
+                        }
                     }
                 }
             }

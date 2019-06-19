@@ -32,8 +32,6 @@ class AuthResult
 
 ```csharp
 public static WebApiClient Instance { get; set; } = new WebApiClient();
-private static HttpClient client = new HttpClient();
-
 private WebApiClient()
 {
 }
@@ -55,21 +53,24 @@ private void Initialize(string name, string password)
     {
         if (string.IsNullOrEmpty(Token))
         {
-            try
+            using (var client = new HttpClient())
             {
-                client.BaseAddress = baseAddress;
+                try
+                {
+                    client.BaseAddress = baseAddress;
 
-                var authContent = new StringContent($"grant_type=password&username={name}&password={password}");
-                authContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-                var authResponse = client.PostAsync("/Token", authContent).Result;
-                authResponse.EnsureSuccessStatusCode();
-                var authResult = authResponse.Content.ReadAsStringAsync().Result;
+                    var authContent = new StringContent($"grant_type=password&username={name}&password={password}");
+                    authContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                    var authResponse = client.PostAsync("/Token", authContent).Result;
+                    authResponse.EnsureSuccessStatusCode();
+                    var authResult = authResponse.Content.ReadAsStringAsync().Result;
 
-                Token = JsonConvert.DeserializeObject<AuthResult>(authResult).AccessToken;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"【InitializeError】{ex.Source},{ex.Message},{ex.InnerException}");
+                    Token = JsonConvert.DeserializeObject<AuthResult>(authResult).AccessToken;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"【InitializeError】{ex.Source},{ex.Message},{ex.InnerException}");
+                }
             }
         }
     }
@@ -81,22 +82,25 @@ public async Task<ObservableCollection<Person>> GetPeopleAsync()
 {
     Initialize(_name, _password);
 
-    client.BaseAddress = baseAddress;
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-    try
+    using (var client = new HttpClient())
     {
-        var response = await client.GetAsync("api/People");
-        response.EnsureSuccessStatusCode();
+        client.BaseAddress = baseAddress;
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-        var json = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<ObservableCollection<Person>>(json);
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine($"【GetError】{ex.Source},{ex.Message},{ex.InnerException}");
+        try
+        {
+            var response = await client.GetAsync("api/People");
+            response.EnsureSuccessStatusCode();
 
-        return null;
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ObservableCollection<Person>>(json);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"【GetError】{ex.Source},{ex.Message},{ex.InnerException}");
+
+            return null;
+        }
     }
 }
 ```
@@ -106,25 +110,28 @@ public async Task<int> PostPersonAsync(Person person)
 {
     Initialize(_name, _password);
 
-    client.BaseAddress = baseAddress;
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-    try
+    using (var client = new HttpClient())
     {
-        var content = new StringContent(JsonConvert.SerializeObject(person));
-        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        var response = await client.PostAsync("api/People", content);
-        response.EnsureSuccessStatusCode();
+        client.BaseAddress = baseAddress;
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-        var result = await response.Content.ReadAsStringAsync();
-        var id = JsonConvert.DeserializeObject<Person>(result).Id;
+        try
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(person));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.PostAsync("api/People", content);
+            response.EnsureSuccessStatusCode();
 
-        return id;
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine($"【PostError】{ex.Source},{ex.Message},{ex.InnerException}");
-        throw;
+            var result = await response.Content.ReadAsStringAsync();
+            var id = JsonConvert.DeserializeObject<Person>(result).Id;
+
+            return id;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"【PostError】{ex.Source},{ex.Message},{ex.InnerException}");
+            throw;
+        }
     }
 }
 ```
@@ -134,23 +141,26 @@ public async Task<bool> UpdatePersonAsync(Person person)
 {
     Initialize(_name, _password);
 
-    client.BaseAddress = baseAddress;
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-    try
+    using (var client = new HttpClient())
     {
-        var content = new StringContent(JsonConvert.SerializeObject(person));
-        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        var response = await client.PutAsync($"api/People/{person.Id}", content);
-        response.EnsureSuccessStatusCode();
+        client.BaseAddress = baseAddress;
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-        return true;
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine($"【UpdateError】{ex.Source},{ex.Message},{ex.InnerException}");
+        try
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(person));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.PutAsync($"api/People/{person.Id}", content);
+            response.EnsureSuccessStatusCode();
 
-        return false;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"【UpdateError】{ex.Source},{ex.Message},{ex.InnerException}");
+
+            return false;
+        }
     }
 }
 ```
@@ -160,21 +170,24 @@ public async Task<bool> DeletePersonAsync(Person person)
 {
     Initialize(_name, _password);
 
-    client.BaseAddress = baseAddress;
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-    try
+    using (var client = new HttpClient())
     {
-        var response = await client.DeleteAsync($"api/People/{person.Id}");
-        response.EnsureSuccessStatusCode();
+        client.BaseAddress = baseAddress;
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-        return true;
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine($"【DeleteError】{ex.Source},{ex.Message},{ex.InnerException}");
+        try
+        {
+            var response = await client.DeleteAsync($"api/People/{person.Id}");
+            response.EnsureSuccessStatusCode();
 
-        return false;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"【DeleteError】{ex.Source},{ex.Message},{ex.InnerException}");
+
+            return false;
+        }
     }
 }
 ```
@@ -187,7 +200,6 @@ namespace XFBasicWebClient.Models
     public class WebApiClient
     {
         public static WebApiClient Instance { get; set; } = new WebApiClient();
-        private static HttpClient client = new HttpClient();
 
         private Uri baseAddress = Helpers.ApiKeys.BaseAddress;
         private string Token = "";
@@ -206,21 +218,24 @@ namespace XFBasicWebClient.Models
             {
                 if (string.IsNullOrEmpty(Token))
                 {
-                    try
+                    using (var client = new HttpClient())
                     {
-                        client.BaseAddress = baseAddress;
+                        try
+                        {
+                            client.BaseAddress = baseAddress;
 
-                        var authContent = new StringContent($"grant_type=password&username={name}&password={password}");
-                        authContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-                        var authResponse = client.PostAsync("/Token", authContent).Result;
-                        authResponse.EnsureSuccessStatusCode();
-                        var authResult = authResponse.Content.ReadAsStringAsync().Result;
+                            var authContent = new StringContent($"grant_type=password&username={name}&password={password}");
+                            authContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                            var authResponse = client.PostAsync("/Token", authContent).Result;
+                            authResponse.EnsureSuccessStatusCode();
+                            var authResult = authResponse.Content.ReadAsStringAsync().Result;
 
-                        Token = JsonConvert.DeserializeObject<AuthResult>(authResult).AccessToken;
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"【InitializeError】{ex.Source},{ex.Message},{ex.InnerException}");
+                            Token = JsonConvert.DeserializeObject<AuthResult>(authResult).AccessToken;
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"【InitializeError】{ex.Source},{ex.Message},{ex.InnerException}");
+                        }
                     }
                 }
             }
@@ -230,22 +245,25 @@ namespace XFBasicWebClient.Models
         {
             Initialize(_name, _password);
 
-            client.BaseAddress = baseAddress;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-            try
+            using (var client = new HttpClient())
             {
-                var response = await client.GetAsync("api/People");
-                response.EnsureSuccessStatusCode();
+                client.BaseAddress = baseAddress;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ObservableCollection<Person>>(json);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"【GetError】{ex.Source},{ex.Message},{ex.InnerException}");
+                try
+                {
+                    var response = await client.GetAsync("api/People");
+                    response.EnsureSuccessStatusCode();
 
-                return null;
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<ObservableCollection<Person>>(json);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"【GetError】{ex.Source},{ex.Message},{ex.InnerException}");
+
+                    return null;
+                }
             }
         }
 
@@ -253,25 +271,28 @@ namespace XFBasicWebClient.Models
         {
             Initialize(_name, _password);
 
-            client.BaseAddress = baseAddress;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-            try
+            using (var client = new HttpClient())
             {
-                var content = new StringContent(JsonConvert.SerializeObject(person));
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var response = await client.PostAsync("api/People", content);
-                response.EnsureSuccessStatusCode();
+                client.BaseAddress = baseAddress;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-                var result = await response.Content.ReadAsStringAsync();
-                var id = JsonConvert.DeserializeObject<Person>(result).Id;
+                try
+                {
+                    var content = new StringContent(JsonConvert.SerializeObject(person));
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    var response = await client.PostAsync("api/People", content);
+                    response.EnsureSuccessStatusCode();
 
-                return id;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"【PostError】{ex.Source},{ex.Message},{ex.InnerException}");
-                throw;
+                    var result = await response.Content.ReadAsStringAsync();
+                    var id = JsonConvert.DeserializeObject<Person>(result).Id;
+
+                    return id;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"【PostError】{ex.Source},{ex.Message},{ex.InnerException}");
+                    throw;
+                }
             }
         }
 
@@ -279,23 +300,26 @@ namespace XFBasicWebClient.Models
         {
             Initialize(_name, _password);
 
-            client.BaseAddress = baseAddress;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-            try
+            using (var client = new HttpClient())
             {
-                var content = new StringContent(JsonConvert.SerializeObject(person));
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var response = await client.PutAsync($"api/People/{person.Id}", content);
-                response.EnsureSuccessStatusCode();
+                client.BaseAddress = baseAddress;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"【UpdateError】{ex.Source},{ex.Message},{ex.InnerException}");
+                try
+                {
+                    var content = new StringContent(JsonConvert.SerializeObject(person));
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    var response = await client.PutAsync($"api/People/{person.Id}", content);
+                    response.EnsureSuccessStatusCode();
 
-                return false;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"【UpdateError】{ex.Source},{ex.Message},{ex.InnerException}");
+
+                    return false;
+                }
             }
         }
 
@@ -303,21 +327,24 @@ namespace XFBasicWebClient.Models
         {
             Initialize(_name, _password);
 
-            client.BaseAddress = baseAddress;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-
-            try
+            using (var client = new HttpClient())
             {
-                var response = await client.DeleteAsync($"api/People/{person.Id}");
-                response.EnsureSuccessStatusCode();
+                client.BaseAddress = baseAddress;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"【DeleteError】{ex.Source},{ex.Message},{ex.InnerException}");
+                try
+                {
+                    var response = await client.DeleteAsync($"api/People/{person.Id}");
+                    response.EnsureSuccessStatusCode();
 
-                return false;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"【DeleteError】{ex.Source},{ex.Message},{ex.InnerException}");
+
+                    return false;
+                }
             }
         }
     }
@@ -330,13 +357,14 @@ namespace XFBasicWebClient.Models
 }
 ```
 
+
 ### SummaryPage.xaml
 
 ```xml
 <ContentPage x:Class="XFBasicWebClient.Views.SummaryPage"
-              xmlns="http://xamarin.com/schemas/2014/forms"
-              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              Title="Summary Page">
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Summary Page">
     <AbsoluteLayout>
     </AbsoluteLayout>
 </ContentPage>
@@ -383,9 +411,9 @@ namespace XFBasicWebClient.Models
     <Label Style="{DynamicResource LabelStyleId}" Text="{Binding Id}" />
     <StackLayout Padding="5">
         <Label Text="{Binding Name}" VerticalTextAlignment="Center" />
-        <Label Text="{Binding Birthday, StringFormat='{}{0:yyyy/MM/dd HH:mm}'}"
-                TextColor="Gray"
-                VerticalTextAlignment="End" />
+        <Label Text="{Binding Birthday}"
+               TextColor="Gray"
+               VerticalTextAlignment="End" />
     </StackLayout>
 </StackLayout>
 ```
@@ -412,9 +440,9 @@ namespace XFBasicWebClient.Models
                           <Label Style="{DynamicResource LabelStyleId}" Text="{Binding Id}" />
                           <StackLayout Padding="5">
                               <Label Text="{Binding Name}" VerticalTextAlignment="Center" />
-                              <Label Text="{Binding Birthday, StringFormat='{}{0:yyyy/MM/dd HH:mm}'}"
-                                      TextColor="Gray"
-                                      VerticalTextAlignment="End" />
+                              <Label Text="{Binding Birthday}"
+                                     TextColor="Gray"
+                                     VerticalTextAlignment="End" />
                           </StackLayout>
                       </StackLayout>
                   </ViewCell>
@@ -636,8 +664,8 @@ namespace XFBasicWebClient.Views
 
 ```xml
 <StackLayout Padding="4"
-              Orientation="Horizontal"
-              Spacing="8">
+             Orientation="Horizontal"
+             Spacing="8">
     <Button x:Name="saveButton"
             HorizontalOptions="FillAndExpand"
             Style="{DynamicResource ButtonStyleGreen}"
@@ -837,4 +865,12 @@ peopleList.ItemSelected += async (object sender, SelectedItemChangedEventArgs e)
 
     peopleList.SelectedItem = null;
 };
+```
+
+### SummaryPage.xaml
+
+```xml
+<Label Text="{Binding Birthday, StringFormat='{}{0:yyyy/MM/dd}'}"
+       TextColor="Gray"
+       VerticalTextAlignment="End" />
 ```
