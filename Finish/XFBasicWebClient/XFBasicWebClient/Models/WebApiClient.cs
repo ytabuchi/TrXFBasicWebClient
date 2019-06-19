@@ -13,7 +13,6 @@ namespace XFBasicWebClient.Models
     public class WebApiClient
     {
         public static WebApiClient Instance { get; set; } = new WebApiClient();
-        //private static HttpClient client = new HttpClient();
 
         private Uri baseAddress = Helpers.ApiKeys.BaseAddress;
         private string Token = "";
