@@ -12,6 +12,6 @@ namespace XFBasicWebClient.Models
 {
     public class WebApiClient
     {
-
+        
     }
 }

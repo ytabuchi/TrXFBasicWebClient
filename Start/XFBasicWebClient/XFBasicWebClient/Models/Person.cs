@@ -5,6 +5,6 @@ namespace XFBasicWebClient.Models
 {
     public class Person
     {
-
+        
     }
 }
