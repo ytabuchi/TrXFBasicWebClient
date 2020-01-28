@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
+// 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x411 を参照してください
 
 namespace XFBasicWebClient.UWP
 {
@@ -25,7 +25,6 @@ namespace XFBasicWebClient.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
             LoadApplication(new XFBasicWebClient.App());
         }
     }

@@ -23,8 +23,8 @@ namespace XFBasicWebClient.UWP
     sealed partial class App : Application
     {
         /// <summary>
-        /// 単一アプリケーション オブジェクトを初期化します。これは、実行される作成したコードの
-        ///最初の行であるため、main() または WinMain() と論理的に等価です。
+        ///単一アプリケーション オブジェクトを初期化します。これは、実行される作成したコードの
+        ///最初の行であるため、論理的には main() または WinMain() と等価です。
         /// </summary>
         public App()
         {
@@ -39,12 +39,6 @@ namespace XFBasicWebClient.UWP
         /// <param name="e">起動の要求とプロセスの詳細を表示します。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
             Frame rootFrame = Window.Current.Content as Frame;
 
             // ウィンドウに既にコンテンツが表示されている場合は、アプリケーションの初期化を繰り返さずに、
@@ -71,9 +65,9 @@ namespace XFBasicWebClient.UWP
             {
                 if (rootFrame.Content == null)
                 {
-                    // ナビゲーション スタックが復元されない場合は、最初のページに移動します。
+                    // ナビゲーションの履歴スタックが復元されていない場合、最初のページに移動します。
                     // このとき、必要な情報をナビゲーション パラメーターとして渡して、新しいページを
-                    //構成します
+                    // 作成します
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // 現在のウィンドウがアクティブであることを確認します
