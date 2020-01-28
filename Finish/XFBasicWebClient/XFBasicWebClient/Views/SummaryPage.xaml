@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage x:Class="XFBasicWebClient.Views.SummaryPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              Title="Summary Page"
              ios:Page.UseSafeArea="true">
     <AbsoluteLayout>
         <ListView x:Name="peopleList"
-                  AbsoluteLayout.LayoutFlags="All"
                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                  AbsoluteLayout.LayoutFlags="All"
                   HasUnevenRows="true"
                   IsPullToRefreshEnabled="True"
                   ItemsSource="{Binding}">
@@ -18,10 +18,10 @@
                         <StackLayout Orientation="Horizontal">
                             <Label Style="{DynamicResource LabelStyleId}" Text="{Binding Id}" />
                             <StackLayout Padding="5">
-                                <Label Text="{Binding Name}" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding Birthday, StringFormat='{}{0:yyyy/MM/dd}'}"
-                                       TextColor="Gray"
-                                       VerticalTextAlignment="End" />
+                                <Label VerticalTextAlignment="Center" Text="{Binding Name}" />
+                                <Label VerticalTextAlignment="End"
+                                       Text="{Binding Birthday, StringFormat='{}{0:yyyy/MM/dd}'}"
+                                       TextColor="Gray" />
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>
@@ -30,14 +30,14 @@
         </ListView>
 
         <Button x:Name="addButton"
-                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
                 AbsoluteLayout.LayoutBounds="0,1,0.5,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
                 Margin="8"
                 Style="{DynamicResource ButtonStyleTransparent}"
                 Text="Add" />
         <Button x:Name="clearButton"
-                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
                 AbsoluteLayout.LayoutBounds="1,1,0.5,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
                 Margin="8"
                 Style="{DynamicResource ButtonStyleTransparent}"
                 Text="Clear all data" />
